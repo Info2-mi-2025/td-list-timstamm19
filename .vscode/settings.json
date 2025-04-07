@@ -1,0 +1,18 @@
+{
+    "editor.formatOnSave": false,
+    "editor.rulers": [80,120],
+
+    "workbench.colorCustomizations": {
+        "editorRuler.foreground": "#2a3080"
+    },
+
+    "git.autofetch": false,
+	"editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "files.associations": {
+        "stdlib.h": "c"
+    },
+    "github.copilot.enable": {
+        "*": false
+      }
+}

@@ -1,0 +1,151 @@
+{
+    "version": 1,
+    "tests": [
+      {
+        "name": "Argument",
+        "tests": [
+          {
+            "name": "Aucun argument",
+            "args": [],
+            "exit": 1
+          },
+          {
+            "name": "Fichier inexistant",
+            "args": ["inexistant.txt"],
+            "exit": 2
+          },
+          {
+            "name": "Option seule sans fichier",
+            "args": ["--sum"],
+            "exit": 1
+          }
+        ]
+      },
+      {
+        "name": "Options seules",
+        "tests": [
+          {
+            "name": "--help",
+            "args": ["data.txt", "--help"],
+            "stdout": [
+              { "regex": "(?i)utilisation" },
+              { "regex": "--reverse" },
+              { "regex": "--sum" },
+              { "regex": "--filter" },
+              { "regex": "--add" },
+              { "regex": "--help" },
+              { "regex": "--version" }
+            ],
+            "exit": 0
+          },
+          {
+            "name": "--version",
+            "args": ["data.txt", "--version"],
+            "stdout": [{ "regex": "version\\s+1\\.0" }],
+            "exit": 0
+          },
+          {
+            "name": "Sans option",
+            "args": ["data.txt"],
+            "stdout": [{ "regex": "Liste\\s*:\\s*5 -> 12 -> 8 -> 1 -> 19" }],
+            "exit": 0
+          },
+          {
+            "name": "--sum",
+            "args": ["data.txt", "--sum"],
+            "stdout": [{ "regex": "Somme\\s*:\\s*45" }],
+            "exit": 0
+          },
+          {
+            "name": "--reverse",
+            "args": ["data.txt", "--reverse"],
+            "stdout": [{ "regex": "Liste\\s*:\\s*19 -> 1 -> 8 -> 12 -> 5" }],
+            "exit": 0
+          },
+          {
+            "name": "--filter 10",
+            "args": ["data.txt", "--filter", "10"],
+            "stdout": [{ "regex": "Liste\\s*:\\s*12 -> 19" }],
+            "exit": 0
+          },
+          {
+            "name": "--add 33",
+            "args": ["data.txt", "--add", "33"],
+            "stdout": [{ "regex": "Valeur\\s+33\\s+ajoutée" }],
+            "exit": 0
+          },
+          {
+            "name": "--min",
+            "args": ["data.txt", "--min"],
+            "stdout": [{ "regex": "Minim.*?1" }],
+            "exit": 0
+          },
+          {
+            "name": "--max",
+            "args": ["data.txt", "--max"],
+            "stdout": [{ "regex": "Maxim.*?19" }],
+            "exit": 0
+          }
+        ]
+      },
+      {
+        "name": "Combinaisons d’options",
+        "tests": [
+          {
+            "name": "Reverse + Sum",
+            "args": ["data.txt", "--reverse", "--sum"],
+            "stdout": [
+              { "regex": "Liste.*?19 -> 1 -> 8 -> 12 -> 5" },
+              { "regex": "Somme\\s*:\\s*45" }
+            ],
+            "exit": 0
+          },
+          {
+            "name": "Filter + Min + Max",
+            "args": ["data.txt", "--filter", "10", "--min", "--max"],
+            "stdout": [
+              { "regex": "Liste\\s*:\\s*12 -> 19" },
+              { "regex": "Minim.*?12" },
+              { "regex": "Maxim.*?19" }
+            ],
+            "exit": 0
+          }
+        ]
+      },
+      {
+        "name": "Autres fichiers",
+        "tests": [
+          {
+            "name": "data2.txt simple sum",
+            "args": ["data2.txt", "--sum"],
+            "stdout": [{ "regex": "Somme\\s*:\\s*60" }],
+            "exit": 0
+          },
+          {
+            "name": "data3.txt reverse",
+            "args": ["data3.txt", "--reverse"],
+            "stdout": [{ "regex": "Liste.*" }],
+            "exit": 0
+          }
+        ]
+      },
+      {
+        "name": "Fichier vide",
+        "tests": [
+          {
+            "name": "data_vide.txt --sum",
+            "args": ["data_vide.txt", "--sum"],
+            "stdout": [{ "regex": "Somme\\s*:\\s*0" }],
+            "exit": 0
+          },
+          {
+            "name": "data_vide.txt --reverse",
+            "args": ["data_vide.txt", "--reverse"],
+            "stdout": [{ "regex": "Liste\\s*:\\s*$" }],
+            "exit": 0
+          }
+        ]
+      }
+    ]
+  }
+  

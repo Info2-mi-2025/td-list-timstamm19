@@ -10,7 +10,8 @@
 	"editor.tabSize": 4,
     "editor.insertSpaces": true,
     "files.associations": {
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "string.h": "c"
     },
     "github.copilot.enable": {
         "*": false

@@ -173,41 +173,34 @@ int main(int argc, char* argv[])
     FILE* f = fopen(filename, "r");
     if (f == NULL) return 2;
 
-    for (int i = 1; i < argc; i++) {
-        if (strcmp(argv[i], "--help") == 0 ||
-            strcmp(argv[i], "--version") == 0 || strcmp(argv[i], "-v") == 0 ||
-            strcmp(argv[i], "--reverse") == 0 ||
-            strcmp(argv[i], "--sum") == 0 ||
-            strcmp(argv[i], "--min") == 0 ||
-            strcmp(argv[i], "--max") == 0 ||
-            strcmp(argv[i], "--add") == 0 ||
-            strcmp(argv[i], "--filter") == 0) {
-            option = true;
-        }
-    }
-
     int data[MAX_DATA];
     int count = 0;
 
-    if (option && !is_file) return 1;
+    
 
     for(int i = 0; i<argc; i++){
         if (strcmp(argv[i], "--help") == 0){
+            option = true;
             help();
         }
         if (strcmp(argv[i], "--version") == 0 || strcmp(argv[i], "-v") == 0){
+            option = true;
             version();
         }
         if (strcmp(argv[i], "--reverse") == 0){
+            option = true;
             reverse_list(&liste);
         }
         if (strcmp(argv[i], "--min") == 0){
+            option = true;
             min_list(&liste);
         }
         if (strcmp(argv[i], "--max") == 0){
+            option = true;
             max_list(&liste);
         }
         if (strcmp(argv[i], "--sum") == 0){
+            option = true;
             int sum = 0;
             for (int i = 0; i < count; i++) sum += data[i];
             printf("Somme : %d\n", sum);
@@ -217,6 +210,7 @@ int main(int argc, char* argv[])
             if (i + 1 >= argc || !is_number(argv[i + 1])){
                 return 1;
             } else {
+                option = true;
                 int numf = atoi(argv[i+1]);
                 filter_list(&liste, numf);
             }
@@ -225,14 +219,16 @@ int main(int argc, char* argv[])
             if (i + 1 >= argc || !is_number(argv[i + 1])){
                 return 1;
             } else {
+                option = true;
                 int numa = atoi(argv[i+1]);
                 add_to_file(filename, numa);
             }
         }
     }
+
+    if (option && !is_file) return 1;
+
     if (!option && is_file){
         printf("Liste : 5 -> 12 -> 8 -> 1 -> 19\n");
-    }
-
-        
+    }   
 }
